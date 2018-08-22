@@ -6,24 +6,29 @@ import com.badlogic.gdx.math.Vector2;
 
 import ru.geekbrains.stargame.base.Sprite;
 import ru.geekbrains.stargame.math.Rect;
+import ru.geekbrains.stargame.screen.pool.BulletPool;
 
 
-public class MainShip extends Sprite {
+public class MainShip extends Ship {
 
     private static final float SHIP_HEIGHT = 0.15f;
     private static final float BOTTOM_MARGIN = 0.05f;
 
     private Vector2 v0 = new Vector2(0.5f, 0.0f);
-    private Vector2 v = new Vector2();
 
     private boolean pressedLeft;
     private boolean pressedRight;
 
-    private Rect worldBounds;
 
-    public MainShip(TextureAtlas atlas) {
+
+    public MainShip(TextureAtlas atlas, BulletPool bulletPool) {
         super(atlas.findRegion("main_ship"), 1, 2,2);
         setHeightProportion(SHIP_HEIGHT);
+        this.bulletRegion = atlas.findRegion("bulletMainShip");
+        this.bulletHeight = 0.01f;
+        this.bulletV.set(0, 0.5f);
+        this.bulletDamage = 1;
+        this.bulletPool = bulletPool;
     }
 
     @Override
@@ -41,8 +46,8 @@ public class MainShip extends Sprite {
 
     @Override
     public void resize(Rect worldBounds) {
+        super.resize(worldBounds);
         setBottom(worldBounds.getBottom() + BOTTOM_MARGIN);
-        this.worldBounds = worldBounds;
     }
 
     public void keyDown(int keycode) {
@@ -56,6 +61,9 @@ public class MainShip extends Sprite {
             case Input.Keys.RIGHT:
                 pressedRight = true;
                 moveRight();
+                break;
+            case Input.Keys.UP:
+                shoot();
                 break;
         }
     }

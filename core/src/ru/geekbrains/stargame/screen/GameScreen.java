@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.Vector2;
 import ru.geekbrains.stargame.base.Base2DScreen;
 import ru.geekbrains.stargame.math.Rect;
 import ru.geekbrains.stargame.screen.gamescreen.MainShip;
+import ru.geekbrains.stargame.screen.pool.BulletPool;
 import ru.geekbrains.stargame.screen.sprites.Background;
 import ru.geekbrains.stargame.screen.sprites.Star;
 
@@ -25,6 +26,8 @@ public class GameScreen extends Base2DScreen {
 
     private Star star[];
     private MainShip mainShip;
+
+    private BulletPool bulletPool = new BulletPool();
 
 
     public GameScreen(Game game) {
@@ -41,7 +44,7 @@ public class GameScreen extends Base2DScreen {
         for (int i = 0; i < star.length; i++) {
             star[i] = new Star(atlas);
         }
-        mainShip = new MainShip(atlas);
+        mainShip = new MainShip(atlas, bulletPool);
     }
 
     @Override
@@ -62,6 +65,7 @@ public class GameScreen extends Base2DScreen {
             star[i].draw(batch);
         }
         mainShip.draw(batch);
+        bulletPool.drawActiveSprites(batch);
         batch.end();
     }
 
@@ -70,6 +74,7 @@ public class GameScreen extends Base2DScreen {
             star[i].update(delta);
         }
         mainShip.update(delta);
+        bulletPool.updateActiveSprites(delta);
     }
 
     public void checkCollisions() {
@@ -77,7 +82,7 @@ public class GameScreen extends Base2DScreen {
     }
 
     public void deleteAllDestroyed() {
-
+        bulletPool.freeAllDestroyedActiveSprites();
     }
 
     @Override
@@ -95,6 +100,7 @@ public class GameScreen extends Base2DScreen {
         super.dispose();
         bgTexture.dispose();
         atlas.dispose();
+        bulletPool.dispose();
     }
 
     @Override
