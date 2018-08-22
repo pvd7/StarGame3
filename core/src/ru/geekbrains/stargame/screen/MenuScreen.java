@@ -11,8 +11,8 @@ import com.badlogic.gdx.math.Vector2;
 import ru.geekbrains.stargame.base.ActionListener;
 import ru.geekbrains.stargame.base.Base2DScreen;
 import ru.geekbrains.stargame.math.Rect;
-import ru.geekbrains.stargame.screen.menu.ButtomNewGame;
-import ru.geekbrains.stargame.screen.menu.ButtonExit;
+import ru.geekbrains.stargame.screen.menuscreen.ButtomNewGame;
+import ru.geekbrains.stargame.screen.menuscreen.ButtonExit;
 import ru.geekbrains.stargame.screen.sprites.Background;
 import ru.geekbrains.stargame.screen.sprites.Star;
 
