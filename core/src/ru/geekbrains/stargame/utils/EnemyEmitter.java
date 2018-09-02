@@ -67,9 +67,7 @@ public class EnemyEmitter {
         if (generateTimer >= generateInterval) {
             generateTimer = 0f;
             Enemy enemy = enemyPool.obtain();
-            int i = Rnd.random.nextInt(ENEMY_LARGE + 1);
-            System.out.println(i);
-            switch (i) {
+            switch (Rnd.random.nextInt(ENEMY_LARGE + 1)) {
                 case ENEMY_SMALL:
                     enemy.set(
                             enemySmallRegion,
